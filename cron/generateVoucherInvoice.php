@@ -62,14 +62,14 @@ foreach($venues AS $vk => $vv){
 		}
 		
 		if($vv['tier'] == 3){
-			$emailTotal = ($invoices[$vv['id']]['total'] + 9.99);
-			$sub = 9.99;
+			$emailTotal = ($invoices[$vv['id']]['total'] + 5.99);
+			$sub = 5.99;
 		} else {
 			$sub = 0;
 		}
 		
 		$created = $vv['created'];
-		$start = date("Y-m-d 00:00:00", strtotime("-1 month"));
+		$start = date("Y-m-d 00:00:00", strtotime("-2 month"));
 		$end = date("Y-m-d 23:59:59", time());
 		
 		echo $created . ' - ' . $start . ' : ' . $end;
