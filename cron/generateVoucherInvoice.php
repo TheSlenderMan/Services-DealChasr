@@ -72,8 +72,6 @@ foreach($venues AS $vk => $vv){
 		$start = date("Y-m-d 00:00:00", strtotime("-2 month"));
 		$end = date("Y-m-d 23:59:59", time());
 		
-		echo $created . ' - ' . $start . ' : ' . $end;
-		
 		if($created >= $start && $created <= $end){
 			$promo = 1;
 		} else {
