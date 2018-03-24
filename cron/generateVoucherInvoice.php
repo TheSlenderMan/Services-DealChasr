@@ -48,7 +48,8 @@ foreach($venues AS $vk => $vv){
 			$getRedemptions = $conn->prepare("SELECT * FROM ds_redemptions
 												WHERE voucherID = :vid
 												AND redeemed >= :ma
-												AND redeemed <= :t");
+												AND redeemed <= :t
+												AND nulled = 0");
 			$getRedemptions->bindParam(":vid", $v['id']);
 			$getRedemptions->bindParam(":ma", $monthAgoToday);
 			$getRedemptions->bindParam(":t", $today);
