@@ -62,8 +62,12 @@ foreach($venues AS $vk => $vv){
 		}
 		
 		if($vv['tier'] == 3){
-			$emailTotal = ($invoices[$vv['id']]['total'] + 5.99);
-			$sub = 5.99;
+			if($invoices[$vv['id']]['redemptions'] <= 50){
+				$minus = ($invoices[$vv['id']]['redemptions'] * 0.5);
+				$invoices[$vv['id']]['total'] = ($invoices[$vv['id']]['total'] - $minus);
+			}
+			$emailTotal = ($invoices[$vv['id']]['total'] + 14.99);
+			$sub = 14.99;
 		} else {
 			$sub = 0;
 		}

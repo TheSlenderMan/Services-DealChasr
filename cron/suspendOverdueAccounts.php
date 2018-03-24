@@ -14,6 +14,7 @@ $getOverdueInvoices = $conn->prepare("SELECT i.invoiceDate, i.amount, i.venueID,
 									JOIN ds_venues AS v
 									ON v.id = i.venueID
 									WHERE i.overdue = 1
+									AND i.invoicePaid = 0
 									AND i.invoiceDate <= DATE_SUB(SYSDATE(), INTERVAL 5 DAY)");
 //$getOverdueInvoices->bindParam(":date", $nowPlusThreeDays);
 $getOverdueInvoices->execute();
@@ -24,5 +25,4 @@ foreach($invoices AS $k => $v) {
 	$setOD = $conn->prepare("UPDATE ds_venues SET active = 0, suspension = 'OVERDUE' WHERE id = :vid");
 	$setOD->bindParam(":vid", $v['venueID']);
 	$setOD->execute();
-}
 }

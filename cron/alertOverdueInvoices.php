@@ -10,10 +10,11 @@ $conn = new PDO('mysql:dbname=' . DS_DATABASE_NAME . ';host=' . DS_DATABASE_HOST
 $now              = date("Y-m-d", time());
 $nowPlusThreeDays = date("Y-m-d", strtotime("+3 days"));
 
-$getOverdueInvoices = $conn->prepare("SELECT i.invoiceDate, i.amount, i.venueID, i.id, v.vEmail FROM ds_invoices AS i
+$getOverdueInvoices = $conn->prepare("SELECT i.invoiceDate, i.amount, i.venueID, i.id, v.vEmail, v.tier FROM ds_invoices AS i
 									JOIN ds_venues AS v
 									ON v.id = i.venueID
 									WHERE i.overdue = 0
+									AND i.invoicePaid = 0
 									AND i.invoiceDate <= DATE_SUB(SYSDATE(), INTERVAL 3 DAY)");
 //$getOverdueInvoices->bindParam(":date", $nowPlusThreeDays);
 $getOverdueInvoices->execute();
@@ -21,6 +22,9 @@ $getOverdueInvoices->execute();
 $invoices = $getOverdueInvoices->fetchAll();
 
 foreach($invoices AS $k => $v) {
+	if($v['tier'] == 3){
+		$v['amount'] = ($v['amount'] + 5.99);
+	}
 	$email = new email($v['vEmail']);
 	$email->setBody($content->getContent("OVERDUEINVOICE", array($v['amount'])));
 	$email->setSubject("Your DealChasr Invoice is Overdue " . strtoupper(date("M Y", time())));
