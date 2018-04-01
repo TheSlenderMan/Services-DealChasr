@@ -49,7 +49,8 @@ foreach($venues AS $vk => $vv){
 												WHERE voucherID = :vid
 												AND redeemed >= :ma
 												AND redeemed <= :t
-												AND nulled = 0");
+												AND nulled = 0
+												AND used = 1");
 			$getRedemptions->bindParam(":vid", $v['id']);
 			$getRedemptions->bindParam(":ma", $monthAgoToday);
 			$getRedemptions->bindParam(":t", $today);
